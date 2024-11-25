@@ -1,0 +1,57 @@
+name:
+  Provision new Environment
+on:
+  workflow_dispatch:
+    inputs:
+      account:
+        description: 'AWS account ID'
+        required: true
+        type: string
+
+      domain:
+        description: 'Domain name (OU name)'
+        required: true
+        type: string
+
+      environment:
+        description: 'Environment name'
+        required: true
+        type: string
+
+      update:
+        description: 'Update flag. False means thie is a new environment'
+        required: true
+        type: boolean
+
+
+env:
+  AWS_REGION:  eu-central-1
+  ACCOUNT:     ${{ inputs.account }}
+  DOMAIN:      ${{ inputs.domain }}
+  ENVIRONMENT: ${{ inputs.environment }}
+
+permissions:
+  id-token: write
+  contents: write
+jobs:
+  AssumeRoleAndCreateAccount:
+    runs-on: ubuntu-2204
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v4
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4.0.2
+        with:
+          role-to-assume: arn:aws:iam::${{ env.ACCOUNT }}:role/service-role/cicd_role #change to reflect your IAM role’s ARN
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: ${{ env.AWS_REGION }}
+      # Hello from AWS: WhoAmI
+      - name: Sts GetCallerIdentity
+        run: |
+          aws sts get-caller-identity
+      - name: Create new Account via Terraform
+        run: |
+          cd scripts
+          terraform init -backend-config=../terraform/remote_backend.hcl
+          terraform workspace select -or-create $OU-$ENVIRONMENT
+          terraform apply --auto-approve -var parent_ou_id=$OU -var domain=$DOMAIN -var environment=$ENVIRONMENT -var sso_email=$OWNER -var account_email=$ACCOUNTMAIL
