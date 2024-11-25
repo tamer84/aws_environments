@@ -1,0 +1,32 @@
+# Compiled files
+*.tfstate.backup
+
+# Allowing terrafomr state for the _bootstrap_account
+
+# Module directory
+.terraform/
+
+_bootstrap_terraform/.terraform.lock.hcl
+_bootstrap_terraform/.terraform/
+_bootstrap_terraform/terraform.tfstate.d/
+_bootstrap_account/.terraform.lock.hcl
+
+.idea/
+
+*/output/
+tmp/
+
+
+*.iml
+
+.env
+.DS_Store
+
+#*.zip
+**/Chart.lock
+**/charts/*.tgz
+terraform.txt
+kubernetes_resources/config
+kubernetes_observability/config
+
+*.crswap
