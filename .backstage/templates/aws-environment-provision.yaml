@@ -91,4 +91,4 @@ spec:
         description: Link to MR which needs to be approved to trigger the provisioning
           process.
         icon: url
-        url: ${{ steps['create-mr'].output.mergeRequestUrl }}
+        url: ${{ steps['create-mr'].output.remoteUrl }}
