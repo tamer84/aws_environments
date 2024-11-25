@@ -52,6 +52,4 @@ jobs:
       - name: Create new Account via Terraform
         run: |
           cd scripts
-          terraform init -backend-config=../terraform/remote_backend.hcl
-          terraform workspace select -or-create $OU-$ENVIRONMENT
-          terraform apply --auto-approve -var parent_ou_id=$OU -var domain=$DOMAIN -var environment=$ENVIRONMENT -var sso_email=$OWNER -var account_email=$ACCOUNTMAIL
+          ./deployment_create $DOMAIN $ENVIRONMENT $ACCOUNT
