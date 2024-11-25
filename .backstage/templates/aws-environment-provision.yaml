@@ -55,7 +55,7 @@ spec:
       name: Template terraform configuration
       action: fetch:template
       input:
-        url: ./.backstage_templates/deployment
+        url: ./.backstage/templates/scaffolder_templates/deployment
         values:
           region: ${{
             steps['fetchEnvironment'].output.entity.metadata.annotations['aws-account-region']
