@@ -1,4 +1,4 @@
-#!/bin/bash
+Die habe#!/bin/bash
 set -e
 
 echo "Starting script with parameters" "$@"
@@ -11,8 +11,8 @@ CONFIG_ROOT="../deployments/${SOLUTION}/${ENVIRONMENT}"
 CONFIG_PATH="${CONFIG_ROOT}/configuration"
 BACKEND_CONFIG_FILE="${CONFIG_ROOT}/backend/backend.hcl"
 
-cd ../infra_resources
 terraform init -backend-config=${BACKEND_CONFIG_FILE} -reconfigure || terraform init -backend-config=${BACKEND_CONFIG_FILE}
 terraform workspace select -or-create ${ENVIRONMENT}
-terraform apply -var-file ${CONFIG_PATH}/${RESOURCE}.tfvars --auto-approve
+terraform destroy -var-file ${CONFIG_PATH}/${RESOURCE}.tfvars ${TERRAFORM_OPTIONS}
+
 

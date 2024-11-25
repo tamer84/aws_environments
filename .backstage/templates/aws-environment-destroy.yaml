@@ -77,7 +77,7 @@ spec:
       input:
         repoUrl: github.com?repo=aws_environments&owner=tamer84
         title: Backstage new environment
-        description: create
+        description: Destroy
         branchName: provision
         sourcePath: .
         targetPath: deployments/${{

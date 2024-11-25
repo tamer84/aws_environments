@@ -9,10 +9,9 @@ export ACCOUNT=${3}
 
 CONFIG_ROOT="../deployments/${SOLUTION}/${ENVIRONMENT}"
 CONFIG_PATH="${CONFIG_ROOT}/configuration"
-TERRAFORM_OPTIONS="--auto-approve"
 
 echo "BOOTSTRAP TERRAFORM..... - workspace ${ENVIRONMENT} on account ${CICD_ACCOUNT}"
 cd ../_bootstrap_terraform
 terraform init
 terraform workspace select -or-create "${SOLUTION}-${ENVIRONMENT}"
-terraform apply -var-file "${CONFIG_PATH}/bootstrap_terraform.tfvars" ${TERRAFORM_OPTIONS}
+terraform apply -var-file "${CONFIG_PATH}/bootstrap_terraform.tfvars" --auto-approve
