@@ -14,5 +14,5 @@ BACKEND_CONFIG_FILE="${CONFIG_ROOT}/backend/backend.hcl"
 cd ../infra_resources
 terraform init -backend-config=${BACKEND_CONFIG_FILE} -reconfigure || terraform init -backend-config=${BACKEND_CONFIG_FILE}
 terraform workspace select -or-create ${ENVIRONMENT}
-terraform apply -var-file ${CONFIG_PATH}/${RESOURCE}.tfvars --auto-approve
+terraform apply -var-file ${CONFIG_PATH}/infra_resources.tfvars --auto-approve
 
