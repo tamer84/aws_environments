@@ -9,7 +9,7 @@ on:
         type: string
 
       domain:
-        description: 'Domain name (OU name)'
+        description: 'Parent OU name'
         required: true
         type: string
 
@@ -19,7 +19,7 @@ on:
         type: string
 
       update:
-        description: 'Update flag. False means thie is a new environment'
+        description: 'Update flag. False means provisioning a new environment'
         required: true
         type: boolean
 

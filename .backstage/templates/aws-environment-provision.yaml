@@ -78,16 +78,10 @@ spec:
         repoUrl: github.com?repo=84tamer/aws-environments&owner=84tamer
         title: Backstage new environment
         description: bla
-        branchName: provision_${{
-          steps['fetchSolution'].output.entity.metadata.labels['crealogix.com/business-unit']
-          }}_${{
-          steps['fetchSolution'].output.entity.metadata.annotations['crealogix.com/solution-acronym']
-          }}_${{
-          steps['fetchEnvironment'].output.entity.metadata.labels['crealogix.com/environment-type']
-          }}
+        branchName: provision
         sourcePath: .
         targetPath: deployments/${{
-          steps['fetchSolution'].output.entity.metadata.annotations['crealogix.com/solution-acronym']
+          steps['fetchEnvironment'].output.entity.spec.domain
           }}/${{
           steps['fetchEnvironment'].output.entity.metadata.environment
           }}
