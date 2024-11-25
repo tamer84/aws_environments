@@ -18,10 +18,14 @@ on:
         required: true
         type: string
 
-      update:
-        description: 'Update flag. False means provisioning a new environment'
+      operation:
+        description: 'What to do to the environment'
         required: true
-        type: boolean
+        type: choice
+        options:
+          - create
+          - update
+          - destroy
 
 env:
   AWS_REGION:  eu-central-1
@@ -34,7 +38,7 @@ permissions:
   contents: write
 jobs:
   AssumeRoleAndCreateAccount:
-    if: ${{ ! inputs.update }}
+    if: ${{  inputs.update == create }}
     runs-on: ubuntu-22.04
     steps:
       - name: Git clone the repository
@@ -54,7 +58,7 @@ jobs:
           cd scripts
           ./deployment_create.sh $DOMAIN $ENVIRONMENT $ACCOUNT
   AssumeRoleAndUpdateAccount:
-    if: ${{  inputs.update }}
+    if: ${{  inputs.opertion == update }}
     runs-on: ubuntu-22.04
     steps:
       - name: Git clone the repository
@@ -73,3 +77,23 @@ jobs:
         run: |
           cd scripts
           ./deployment_update.sh $DOMAIN $ENVIRONMENT $ACCOUNT
+  AssumeRoleAndDestroyAccount:
+    if: ${{  inputs.opertion == destroy }}
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v4
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4.0.2
+        with:
+          role-to-assume: arn:aws:iam::${{ env.ACCOUNT }}:role/service-role/cicd_role #change to reflect your IAM role’s ARN
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: ${{ env.AWS_REGION }}
+      # Hello from AWS: WhoAmI
+      - name: Sts GetCallerIdentity
+        run: |
+          aws sts get-caller-identity
+      - name: Update Account via Terraform
+        run: |
+          cd scripts
+          ./deployment_destroy.sh $DOMAIN $ENVIRONMENT $ACCOUNT
