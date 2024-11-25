@@ -52,7 +52,7 @@ jobs:
       - name: Create new Account via Terraform
         run: |
           cd scripts
-          ./deployment_create $DOMAIN $ENVIRONMENT $ACCOUNT
+          ./deployment_create.sh $DOMAIN $ENVIRONMENT $ACCOUNT
   AssumeRoleAndUpdateAccount:
     if: ${{  inputs.update }}
     runs-on: ubuntu-22.04
@@ -72,4 +72,4 @@ jobs:
       - name: Update Account via Terraform
         run: |
           cd scripts
-          ./deployment_update $DOMAIN $ENVIRONMENT $ACCOUNT
+          ./deployment_update.sh $DOMAIN $ENVIRONMENT $ACCOUNT
