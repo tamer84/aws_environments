@@ -1,5 +1,5 @@
-solution  = "github2"
-region    = "eu-central-1"
-accountId = "913524924452"
+solution   = "github2"
+region     = "eu-central-1"
+account_id = "913524924452"
 
 create_ec2 = true
