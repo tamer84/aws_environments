@@ -38,7 +38,7 @@ permissions:
   contents: write
 jobs:
   AssumeRoleAndCreateAccount:
-    if: ${{  inputs.update == create }}
+    if: ${{  inputs.operation == create }}
     runs-on: ubuntu-22.04
     steps:
       - name: Git clone the repository
@@ -58,7 +58,7 @@ jobs:
           cd scripts
           ./deployment_create.sh $DOMAIN $ENVIRONMENT $ACCOUNT
   AssumeRoleAndUpdateAccount:
-    if: ${{  inputs.opertion == update }}
+    if: ${{  inputs.operation == update }}
     runs-on: ubuntu-22.04
     steps:
       - name: Git clone the repository
@@ -78,7 +78,7 @@ jobs:
           cd scripts
           ./deployment_update.sh $DOMAIN $ENVIRONMENT $ACCOUNT
   AssumeRoleAndDestroyAccount:
-    if: ${{  inputs.opertion == destroy }}
+    if: ${{  inputs.operation == destroy }}
     runs-on: ubuntu-22.04
     steps:
       - name: Git clone the repository
