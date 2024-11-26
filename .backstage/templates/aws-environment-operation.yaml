@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 # some metadata about the template itself
 metadata:
-  name: aws-environment-provision
+  name: aws-environment-operation
   title: AWS Environment Operation
   description:  Perform an operation on an AWS account
 spec:
