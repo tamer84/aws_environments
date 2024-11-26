@@ -26,7 +26,7 @@ and add to `/packages/backend/src/index.ts`:
 `backend.add(import('@backstage/plugin-scaffolder-backend-module-github'));`
 
 To be able to discover the Catalog Entities from GitHub (and to trigger the eventual MR), Backstage requires a Token with the scopes (repo, workflow) for GitHub.  
-For this simple scenario, it is enough to [create a PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) and set it as an environment variable before starting Backstage.  
+For this simple scenario, it is enough to [create a PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) and set it as an environment variable (GITHUB_TOKEN) before starting Backstage.  
 
 Finally, before [starting Backstage](https://backstage.io/docs/getting-started/#2-run-the-backstage-app), copy over the [example app-config.yaml](.backstage/config/app-config.yaml) from this repo.  
 ````
