@@ -1,5 +1,5 @@
 # Backstage integrated AWS account provisioning
-This repo provides an example lightweight alternative to <<  INSERT LINK TO BLOG POST HERE   >>, enabling the provisioning of Control Tower-integrated AWS OUs and accounts via GitHub Actions.
+This repo provides an example lightweight alternative to the solution described at <<  INSERT LINK TO BLOG POST HERE   >>, enabling the provisioning of Control Tower-integrated AWS OUs and accounts via GitHub Actions.
 The main focus of this repo is the Backstage integration and the automated resource provisioning.
 
 To see more details about the OU and account vending automation, see the repo [aws_management](https://github.com/tamer84/aws_management).
@@ -48,7 +48,6 @@ catalog:
 Make sure you modify the catalog location URLs to point to your own GitHub clones/forks of these repos.
 
 ### Launch Backstage
-Now things start to get interesting!  
 Its time to [start Backstage](https://backstage.io/docs/getting-started/#2-run-the-backstage-app).
 ````
 cd my-backstage-app # your app name
@@ -59,14 +58,21 @@ yarn dev
 If everything has gone to plan, you should see Backstage starting up and available on your [localhost](http://localhost:3000/catalog) with two entries in the catalog, AWS Management and AWS Environments.
 To understand what the Catalog is, please check the [Backstage documentation](https://backstage.io/docs/features/software-catalog/).
 
-### Templates
-The Template [AWS Environment Provision/Update](.backstage/templates/aws-environment-provision.yaml) should also be imported in Backstage.  
+### Ecosystem Model
+The OUs and accounts created in the management repo are represented in the Backstage Catalog based on the [Backstage System Model](https://backstage.io/docs/features/software-catalog/system-model).
 
-### Domains
+#### Domains
 Any OU you create in AWS via the automation in [aws_management](https://github.com/tamer84/aws_management) should have a catalog entry here.  
 
-### Systems
+#### Systems
 Any account you create in AWS via the automation in [aws_management](https://github.com/tamer84/aws_management) should have a catalog entry here.
 
+### Templates
+The Template [AWS Environment Provision/Update](.backstage/templates/aws-environment-provision.yaml) will also be imported in Backstage if configured correctly.  
+It will be visible in the Catalog as an entity of type [Template](https://backstage.io/docs/features/software-catalog/system-model#template).  
+Where it really becomes useful is visible in the [/create](http://localhost:3000/create) endpoint of your local Backstage deployment...
+
 ## Deployments
+Now things start to get interesting!  
+The Template can be launched, which will bring up a screen allowing the user to choose a target AWS account, and the question 
 

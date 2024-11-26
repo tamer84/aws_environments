@@ -3,8 +3,8 @@ kind: Template
 # some metadata about the template itself
 metadata:
   name: aws-environment-provision
-  title: AWS Environment Provision/Update
-  description:  Provisions or updates a cloud environment on AWS
+  title: AWS Environment Destroy
+  description:  Destroys a cloud environment on AWS
 spec:
   owner: guests
   type: Environment
@@ -16,79 +16,32 @@ spec:
         account:
           title: AWS Account
           type: string
-          description: AWS Account
+          description: AWS Account to destroy
           ui:field: EntityPicker
           ui:options:
             allowArbitraryValues: false
             allowedKinds:
               - System
             defaultKind: System
-        operation:
-          title: Do you create a new environment or are you updating an existing
-            environment?
-          type: string
-          enum:
-            - create
-            - update
-          enumNames:
-            - Creating a new environment
-    - title: EC2 Instance
-      required:
-        - create_ec2
-      properties:
-        create_ec2:
-          title: Create an EC2 Instance in the account
-          type: boolean
-          default: true
   steps:
     - id: fetchEnvironment
       name: Fetch Environment
       action: catalog:fetch
       input:
         entityRef: ${{ parameters.account }}
-    - id: fetchSolution
-      name: Fetch Solution
-      action: catalog:fetch
-      input:
-        entityRef: domain:default/${{ steps['fetchEnvironment'].output.entity.spec.domain }}
-    - id: fetch-base
-      name: Template terraform configuration
-      action: fetch:template
-      input:
-        url: ./scaffolder_templates/deployment
-        values:
-          region: ${{
-            steps['fetchEnvironment'].output.entity.metadata.annotations['aws-account-region']
-            }}
-          solution: ${{
-            steps['fetchSolution'].output.entity.metadata.name
-            }}
-          environment: ${{
-            steps['fetchEnvironment'].output.entity.metadata.environment
-            }}
-          accountId: ${{
-            steps['fetchEnvironment'].output.entity.metadata.annotations['aws-account-id']
-            }}
-          create_ec2: ${{ parameters.create_ec2 }}
-
     - id: create-mr
-      name: Create/Update environment MR
+      name: Destroy environment MR
       action: publish:github:pull-request
       input:
         repoUrl: github.com?repo=aws_environments&owner=tamer84
-        title: Backstage new environment
+        title: Backstage destroy environment
         description: Destroy
-        branchName: provision
+        branchName: destroy_${{ steps['fetchEnvironment'].output.entity.metadata.environment }}
         sourcePath: .
-        targetPath: deployments/${{
-          steps['fetchEnvironment'].output.entity.spec.domain
-          }}/${{
-          steps['fetchEnvironment'].output.entity.metadata.environment
-          }}
+        targetPath: .
   output:
     links:
       - title: Merge request
-        description: Link to MR which needs to be approved to trigger the provisioning
-          process.
+        description: Link to MR which needs to be approved to trigger the destruction process.
         icon: url
         url: ${{ steps['create-mr'].output.remoteUrl }}

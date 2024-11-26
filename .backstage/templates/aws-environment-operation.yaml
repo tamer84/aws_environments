@@ -1,0 +1,62 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+# some metadata about the template itself
+metadata:
+  name: aws-environment-provision
+  title: AWS Environment Operation
+  description:  Perform an operation on an AWS account
+spec:
+  owner: guests
+  type: Environment
+  parameters:
+    - title: AWS Workload Account
+      required:
+        - account
+      properties:
+        account:
+          title: AWS Account
+          type: string
+          description: AWS Account
+          ui:field: EntityPicker
+          ui:options:
+            allowArbitraryValues: false
+            allowedKinds:
+              - System
+            defaultKind: System
+        operation:
+          title: What do you want to do to the environment?
+          type: string
+          enum:
+            - create
+            - update
+            - destroy
+          enumNames:
+            - Create a new environment
+            - Update the environment
+            - Destroy the resources in the account
+  steps:
+    - id: fetchEnvironment
+      name: Fetch Environment
+      action: catalog:fetch
+      input:
+        entityRef: ${{ parameters.account }}
+    - id: fetchSolution
+      name: Fetch Solution
+      action: catalog:fetch
+      input:
+        entityRef: domain:default/${{ steps['fetchEnvironment'].output.entity.spec.domain }}
+
+
+    - id: environment-operation
+      name: AWS operation
+      action: github:actions:dispatch
+      input:
+        repoUrl: github.com?repo=aws_environments&owner=tamer84
+        workflowId: operation.yml
+        branchName: main
+        workflowInputs:
+          account: ${{ parameters.account }},
+          domain: ${{ steps['fetchEnvironment'].output.entity.spec.domain }},
+          environment: ${{ steps['fetchEnvironment'].output.entity.environment }},
+          operation: ${{ parameters.operation }},
+

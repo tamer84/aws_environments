@@ -24,14 +24,14 @@ spec:
               - System
             defaultKind: System
         operation:
-          title: Do you create a new environment or are you updating an existing
-            environment?
+          title: Are you creating a new environment or updating an existing one?
           type: string
           enum:
             - create
             - update
           enumNames:
             - Creating a new environment
+            - Updating an existing environments
     - title: EC2 Instance
       required:
         - create_ec2
