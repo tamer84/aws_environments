@@ -17,7 +17,7 @@ For this simple example, it's enough to launch Backstage locally.
 Just follow the [getting-started](https://backstage.io/docs/getting-started/) instructions provided by Backstage to get the sources.  
 
 ### Backstage Configuration
-This setup requires [GitHub actions to be installed]https://backstage.io/docs/features/software-templates/builtin-actions/), so that the GitHub MR can be created.  
+This setup requires [GitHub actions to be installed](https://backstage.io/docs/features/software-templates/builtin-actions/), so that the GitHub MR can be created.  
 
 From backstage root dir call:  
 `yarn --cwd packages/backend add @backstage/plugin-scaffolder-backend-module-github`
