@@ -1,0 +1,94 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+# some metadata about the template itself
+metadata:
+  name: aws-environment-provision
+  title: AWS Environment Provision/Update
+  description:  Provisions or updates a cloud environment on AWS
+spec:
+  owner: guests
+  type: Environment
+  parameters:
+    - title: AWS Workload Account
+      required:
+        - account
+      properties:
+        account:
+          title: AWS Account
+          type: string
+          description: AWS Account
+          ui:field: EntityPicker
+          ui:options:
+            allowArbitraryValues: false
+            allowedKinds:
+              - System
+            defaultKind: System
+        operation:
+          title: Are you creating a new environment or updating an existing one?
+          type: string
+          enum:
+            - create
+            - update
+          enumNames:
+            - Creating a new environment
+            - Updating an existing environments
+    - title: EC2 Instance
+      required:
+        - create_ec2
+      properties:
+        create_ec2:
+          title: Create an EC2 Instance in the account
+          type: boolean
+          default: true
+  steps:
+    - id: fetchEnvironment
+      name: Fetch Environment
+      action: catalog:fetch
+      input:
+        entityRef: ${{ parameters.account }}
+    - id: fetchSolution
+      name: Fetch Solution
+      action: catalog:fetch
+      input:
+        entityRef: domain:default/${{ steps['fetchEnvironment'].output.entity.spec.domain }}
+    - id: fetch-base
+      name: Template terraform configuration
+      action: fetch:template
+      input:
+        url: ./scaffolder_templates/deployment
+        values:
+          region: ${{
+            steps['fetchEnvironment'].output.entity.metadata.annotations['aws-account-region']
+            }}
+          solution: ${{
+            steps['fetchSolution'].output.entity.metadata.name
+            }}
+          environment: ${{
+            steps['fetchEnvironment'].output.entity.metadata.environment
+            }}
+          accountId: ${{
+            steps['fetchEnvironment'].output.entity.metadata.annotations['aws-account-id']
+            }}
+          create_ec2: ${{ parameters.create_ec2 }}
+
+    - id: create-mr
+      name: Create/Update environment MR
+      action: publish:github:pull-request
+      input:
+        repoUrl: github.com?repo=aws_environments&owner=tamer84
+        title: Backstage new environment
+        description: create
+        branchName: provision
+        sourcePath: .
+        targetPath: deployments/${{
+          steps['fetchEnvironment'].output.entity.spec.domain
+          }}/${{
+          steps['fetchEnvironment'].output.entity.metadata.environment
+          }}
+  output:
+    links:
+      - title: Merge request
+        description: Link to MR which needs to be approved to trigger the provisioning
+          process.
+        icon: url
+        url: ${{ steps['create-mr'].output.remoteUrl }}
