@@ -19,10 +19,10 @@ Just follow the [getting-started](https://backstage.io/docs/getting-started/) in
 ### Backstage Configuration
 This setup requires [GitHub actions to be installed]https://backstage.io/docs/features/software-templates/builtin-actions/), so that the GitHub MR can be created.  
 
-From backstage root dir call:
+From backstage root dir call:  
 `yarn --cwd packages/backend add @backstage/plugin-scaffolder-backend-module-github`
 
-and add to `/packages/backend/src/index.ts`:
+and add to `/packages/backend/src/index.ts`:  
 `backend.add(import('@backstage/plugin-scaffolder-backend-module-github'));`
 
 To be able to discover the Catalog Entities from GitHub (and to trigger the eventual MR), Backstage requires a Token with the scopes (repo, workflow) for GitHub.  
