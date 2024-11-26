@@ -26,9 +26,10 @@ and add to `/packages/backend/src/index.ts`:
 `backend.add(import('@backstage/plugin-scaffolder-backend-module-github'));`
 
 To be able to discover the Catalog Entities from GitHub (and to trigger the eventual MR), Backstage requires a Token with the scopes (repo, workflow) for GitHub.  
-For this simple scenario, it is enough to [create a PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) and set it as an environment variable (GITHUB_TOKEN) before starting Backstage.  
+For this simple scenario, it is enough to [create a PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) and set it as an environment variable (GITHUB_TOKEN).  
 
-Finally, before [starting Backstage](https://backstage.io/docs/getting-started/#2-run-the-backstage-app), copy over the [example app-config.yaml](.backstage/config/app-config.yaml) from this repo.  
+Finally, copy over the [example app-config.yaml](.backstage/config/app-config.yaml) from this repo.  
+
 ````
 catalog:
   orphanStrategy: delete
@@ -46,21 +47,26 @@ catalog:
 ````
 Make sure you modify the catalog location URLs to point to your own GitHub clones/forks of these repos.
 
-
 ### Launch Backstage
+Now things start to get interesting!  
+Its time to [start Backstage](https://backstage.io/docs/getting-started/#2-run-the-backstage-app).
 ````
 cd my-backstage-app # your app name
 yarn dev
 ````
 
 ## Backstage catalog
+If everything has gone to plan, you should see Backstage starting up and available on your [localhost](http://localhost:3000/catalog) with two entries in the catalog, AWS Management and AWS Environments.
+To understand what the Catalog is, please check the [Backstage documentation](https://backstage.io/docs/features/software-catalog/).
 
 ### Templates
+The Template [AWS Environment Provision/Update](.backstage/templates/aws-environment-provision.yaml) should also be imported in Backstage.  
 
 ### Domains
+Any OU you create in AWS via the automation in [aws_management](https://github.com/tamer84/aws_management) should have a catalog entry here.  
 
 ### Systems
+Any account you create in AWS via the automation in [aws_management](https://github.com/tamer84/aws_management) should have a catalog entry here.
 
 ## Deployments
-
 
