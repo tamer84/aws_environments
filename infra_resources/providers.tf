@@ -13,7 +13,7 @@ provider "aws" {
   region = var.region
   alias  = "dns"
   assume_role {
-    role_arn = null
+    role_arn = ""
   }
   assume_role {
     # The role ARN for CICD
