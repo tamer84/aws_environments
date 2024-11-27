@@ -15,12 +15,12 @@ resource "aws_route53_record" "test_entry" {
 }
 
 data "aws_route53_zone" "zone_apex" {
-  provider = aws.workload
+  provider = aws.dns
   name = var.domain
 }
 
 resource "aws_route53_record" "ns_entries" {
-  provider = aws.workload
+  provider = aws.dns
   zone_id = data.aws_route53_zone.zone_apex.id
   name    = "${terraform.workspace}.${var.solution}.${var.domain}."
   type    = "NS"
