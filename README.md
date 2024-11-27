@@ -7,7 +7,7 @@ To see more details about the OU and account vending automation, see the repo [a
 ## Getting started
 This project builds upon the implementation hosted in the  [aws_management](https://github.com/tamer84/aws_management) repo.  
 Once the OU and account automation is in place, and at least one account has been created, you can proceed with this setup.  
-Clone/Fork this repo into your own GitHub org and continue.  
+Fork this repo into your own GitHub org and continue.  
 
 ## Backstage Setup
 ### Backstage Install
