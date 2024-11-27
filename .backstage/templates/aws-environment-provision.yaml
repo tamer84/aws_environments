@@ -32,6 +32,9 @@ spec:
           enumNames:
             - Creating a new environment
             - Updating an existing environments
+        domain:
+          title: Top level Domain
+          type: String
     - title: EC2 Instance
       required:
         - create_ec2
@@ -66,10 +69,14 @@ spec:
           environment: ${{
             steps['fetchEnvironment'].output.entity.metadata.environment
             }}
-          accountId: ${{
+          account_id: ${{
             steps['fetchEnvironment'].output.entity.metadata.annotations['aws-account-id']
             }}
+          management_account_id: ${{
+            steps['fetchEnvironment'].output.entity.metadata.annotations['aws-management-account-id']
+            }}
           create_ec2: ${{ parameters.create_ec2 }}
+          domain: ${{ parameters.domain }}
 
     - id: create-mr
       name: Create/Update environment MR
