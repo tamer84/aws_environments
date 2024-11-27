@@ -4,7 +4,7 @@ kind: Template
 metadata:
   name: aws-environment-provision
   title: AWS Environment Provision/Update
-  description:  Provisions or updates a cloud environment on AWS
+  description:  Configure a cloud environment on AWS
 spec:
   owner: guests
   type: Environment
@@ -23,15 +23,6 @@ spec:
             allowedKinds:
               - System
             defaultKind: System
-        operation:
-          title: Are you creating a new environment or updating an existing one?
-          type: string
-          enum:
-            - create
-            - update
-          enumNames:
-            - Creating a new environment
-            - Updating an existing environments
     - title: EC2 Instance
       required:
         - create_ec2
@@ -76,9 +67,9 @@ spec:
       action: publish:github:pull-request
       input:
         repoUrl: github.com?repo=aws_environments&owner=tamer84
-        title: Backstage new environment
+        title: Backstage environment configuration for ${{ steps['fetchEnvironment'].output.entity.spec.domain  }} ${{ steps['fetchEnvironment'].output.entity.metadata.environment  }}
         description: create
-        branchName: provision
+        branchName: configure_${{ steps['fetchEnvironment'].output.entity.spec.domain  }}_${{  steps['fetchEnvironment'].output.entity.metadata.environment  }}
         sourcePath: .
         targetPath: deployments/${{
           steps['fetchEnvironment'].output.entity.spec.domain
@@ -88,7 +79,6 @@ spec:
   output:
     links:
       - title: Merge request
-        description: Link to MR which needs to be approved to trigger the provisioning
-          process.
+        description: Link to MR which needs to be approved to merge configuration to deployments directory.
         icon: url
         url: ${{ steps['create-mr'].output.remoteUrl }}
