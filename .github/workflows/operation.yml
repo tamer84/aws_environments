@@ -55,6 +55,10 @@ jobs:
           role-to-assume: arn:aws:iam::${{ env.ACCOUNT }}:role/service-role/cicd_role
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.AWS_REGION }}
+      # Hello from AWS: WhoAmI
+      - name: Sts GetCallerIdentity
+        run: |
+          aws sts get-caller-identity
       - name: Create Terraform backend and account resources
         run: |
           cd scripts
@@ -71,6 +75,10 @@ jobs:
           role-to-assume: arn:aws:iam::${{ env.ACCOUNT }}:role/service-role/cicd_role
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.AWS_REGION }}
+      # Hello from AWS: WhoAmI
+      - name: Sts GetCallerIdentity
+        run: |
+          aws sts get-caller-identity
       - name: Update account resources
         run: |
           cd scripts
@@ -87,6 +95,10 @@ jobs:
           role-to-assume: arn:aws:iam::${{ env.ACCOUNT }}:role/service-role/cicd_role
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.AWS_REGION }}
+      # Hello from AWS: WhoAmI
+      - name: Sts GetCallerIdentity
+        run: |
+          aws sts get-caller-identity
       - name: Destroy account resources
         run: |
           cd scripts
