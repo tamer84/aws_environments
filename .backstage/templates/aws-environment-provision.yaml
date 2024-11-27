@@ -34,7 +34,7 @@ spec:
             - Updating an existing environments
         domain:
           title: Top level Domain
-          type: String
+          type: string
     - title: EC2 Instance
       required:
         - create_ec2
