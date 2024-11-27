@@ -13,5 +13,5 @@ CONFIG_PATH="${CONFIG_ROOT}/configuration"
 echo "BOOTSTRAP TERRAFORM..... - workspace ${ENVIRONMENT} on account ${CICD_ACCOUNT}"
 cd ../_bootstrap_terraform
 terraform init
-terraform workspace select -or-create "${ENVIRONMENT}"
+terraform workspace select -or-create "${SOLUTION}-${ENVIRONMENT}"
 terraform apply -var-file "${CONFIG_PATH}/bootstrap_terraform.tfvars" --auto-approve
