@@ -1,0 +1,26 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: aws_environments
+  title: AWS Environments
+  description: Terraform IAC repo for provisioning application environments
+  tags:
+    - terraform
+    - iac
+    - cicd
+    - environments
+  labels:
+    team: guests
+spec:
+  type: library
+  lifecycle: production
+  owner: guests
+---
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: iac-environment-files
+  description: IAC templates and system resources
+spec:
+  targets:
+    - .backstage/templates/*.yaml
