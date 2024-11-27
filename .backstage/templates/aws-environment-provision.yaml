@@ -3,7 +3,7 @@ kind: Template
 # some metadata about the template itself
 metadata:
   name: aws-environment-provision
-  title: AWS Environment Provision/Update
+  title: AWS Environment Configuration
   description:  Configure a cloud environment on AWS
 spec:
   owner: guests
