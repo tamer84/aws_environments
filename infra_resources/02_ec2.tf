@@ -16,7 +16,7 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_instance" "web" {
 
-  count = var.create_ec2 ? 1 : 0
+  count = var.create_ec2 ? 1 : 0 # this is what makes the deployment optional, based on the flag in the tfvars file
 
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"

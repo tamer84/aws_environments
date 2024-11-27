@@ -1,12 +1,13 @@
 # Backstage integrated AWS account provisioning
-This repo provides an example lightweight alternative to the solution described at <<  INSERT LINK TO BLOG POST HERE   >>, enabling the provisioning of Control Tower-integrated AWS OUs and accounts via GitHub Actions.
-The main focus of this repo is the Backstage integration and the automated resource provisioning.
+This repo provides an example lightweight solution enabling the provisioning of Control Tower-integrated AWS OUs and accounts via GitHub Actions.
+The main focus of this repo is the Backstage integration and the automated resource provisioning within accounts.
 
 To see more details about the OU and account vending automation, see the repo [aws_management](https://github.com/tamer84/aws_management).
 
 ## Getting started
 This project builds upon the implementation hosted in the  [aws_management](https://github.com/tamer84/aws_management) repo.  
 Once the OU and account automation is in place, and at least one account has been created, you can proceed with this setup.  
+Clone/Fork this repo into your own GitHub org and continue.  
 
 ## Backstage Setup
 ### Backstage Install
@@ -74,6 +75,7 @@ Where they really become useful is visible in the [/create](http://localhost:300
 
 ## Deployments
 Now things start to get interesting!  
+![EnvironmentProvision](diagrams/AWS_Automation_GitHub-EnvironmentProvision.drawio.png)
 
 The Template [AWS Environment Provision/Update](.backstage/templates/aws-environment-provision.yaml) can be launched to create the terraform variables for an environment deployment.  
 This repo contains a simple example, but it suffices to demonstrate how the templating works.  
@@ -81,5 +83,6 @@ The Backstage template gathers the configuration inputs from the user in the fro
 Approving the MR merges the configuration to the `main` branch.  
 
 The Template [AWS Environment Operation](.backstage/templates/aws-environment-operation.yaml) can be used to trigger a GitHub workflow to create/update/destroy an AWS accounts resources.  
-In real life scenarios, the merging of the MR could lead to some kind of approval flow (automated or semi-manual) before triggering the rollout to the environemnt.  
-For the sake of simplicity, this repo demonstrates Backstage directly calling GitHub workflows
+In real life scenarios, the merging of the MR would lead to some kind of approval flow (automated or semi-manual) before triggering the rollout to the environemnt.  
+
+For the sake of simplicity, this repo demonstrates Backstage directly calling GitHub workflows from Backstage.
