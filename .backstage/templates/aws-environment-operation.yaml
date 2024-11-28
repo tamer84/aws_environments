@@ -23,6 +23,8 @@ spec:
             allowedKinds:
               - System
             defaultKind: System
+            params:
+              filter: kind=System,metadata.annotations.type=workload
         operation:
           title: What do you want to do to the environment?
           type: string
@@ -32,7 +34,7 @@ spec:
             - destroy
           enumNames:
             - Create a new environment
-            - Update the environment
+            - Update an existing environment
             - Destroy the resources in the account
   steps:
     - id: fetchEnvironment
@@ -40,12 +42,6 @@ spec:
       action: catalog:fetch
       input:
         entityRef: ${{ parameters.account }}
-    - id: fetchSolution
-      name: Fetch Solution
-      action: catalog:fetch
-      input:
-        entityRef: domain:default/${{ steps['fetchEnvironment'].output.entity.spec.domain }}
-
 
     - id: environment-operation
       name: AWS operation

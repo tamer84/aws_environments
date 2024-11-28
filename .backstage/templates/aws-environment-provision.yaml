@@ -23,6 +23,8 @@ spec:
             allowedKinds:
               - System
             defaultKind: System
+            params:
+              filter: kind=System,metadata.annotations.type=workload
     - title: EC2 Instance
       required:
         - create_ec2
