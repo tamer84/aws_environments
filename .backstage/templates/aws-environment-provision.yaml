@@ -25,7 +25,7 @@ spec:
             defaultKind: System
             catalogFilter:
               - kind: System
-                metadata.annotations.type: workload
+                'metadata.annotations.type': workload
     - title: EC2 Instance
       required:
         - create_ec2
