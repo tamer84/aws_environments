@@ -26,5 +26,3 @@ For the sake of simplicity, this repo demonstrates Backstage directly calling Gi
 ## Next steps
 Get creative and extend the infra_resources to provision whatever you need in your environments.  
 Extending the backstage Templates will allow you to configure the new resource types.  
-
-Integrate the workflows into your own processes, maybe you want ServiceNow to trigger OU/Account requests?
