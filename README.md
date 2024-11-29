@@ -13,12 +13,12 @@ Fork this repo into your own GitHub org and continue.
 Now things start to get interesting!  
 ![EnvironmentProvision](diagrams/AWS_Automation_GitHub-EnvironmentProvision.drawio.png)
 
-The Template [AWS Environment Configuration](.backstage/templates/aws-environment-provision.yaml) can be launched to create the terraform variables for an environment deployment.  
+The Template [AWS Environment Configuration](http://localhost:3000/create/templates/default/aws-environment-configuration) can be launched to create the terraform variables for an environment deployment.  
 This repo contains a simple example, but it suffices to demonstrate how the templating works.  
-The Backstage template gathers the configuration inputs from the user in the frontend, uses the templating action built into the Backstage Scaffolder, and creates an MR in the repo.  
+The [Backstage template](.backstage/templates/aws-environment-configuration.yaml) gathers the configuration inputs from the user in the frontend, uses the templating action built into the Backstage Scaffolder, and creates an MR in the repo.  
 Approving the MR merges the configuration to the `main` branch.  
 
-The Template [AWS Environment Operation](.backstage/templates/aws-environment-operation.yaml) can be used to trigger a GitHub workflow to create/update/destroy an AWS accounts resources.  
+The Template [AWS Environment Operation](http://localhost:3000/create/templates/default/aws-environment-operation) ([defined here](.backstage/templates/aws-environment-operation.yaml)) can be used to trigger a GitHub workflow to create/update/destroy an AWS accounts resources.  
 In real life scenarios, the merging of the MR would lead to some kind of approval flow (automated or semi-manual) before triggering the rollout to the environemnt.  
 
 For the sake of simplicity, this repo demonstrates Backstage directly calling GitHub workflows from Backstage.
