@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 # some metadata about the template itself
 metadata:
-  name: aws-environment-provision
+  name: aws-environment-configuration
   title: AWS Environment Configuration
   description:  Configure a cloud environment on AWS
 spec:
