@@ -1,8 +1,6 @@
 # Backstage integrated AWS account provisioning
-This repo provides an example lightweight solution enabling the provisioning of Control Tower-integrated AWS OUs and accounts via GitHub Actions.
+This repo extends the example solution from [aws_management](https://github.com/tamer84/aws_management).
 The main focus of this repo is the automated resource provisioning within accounts.
-
-To see more details about the OU and account vending automation, see the repo [aws_management](https://github.com/tamer84/aws_management).
 
 ## Getting started
 This project builds upon the implementation hosted in the  [aws_management](https://github.com/tamer84/aws_management) repo.  
